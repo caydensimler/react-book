@@ -1,24 +1,28 @@
 import React from "react";
 
-const Practice1 = () => {
+const accountInformation = () => {
   const id = 1;
   const username = "zgordon";
+  const email = "test@testmail.com";
+  const combo = email + id;
+
   return (
-    <div className="practice">
+    <div className="account-details">
       {/* 
         1.Pass the id and username into <User /> as props 
       */}
-      <User />
+      <User id={id} username={username} email={email} combo={combo} />
     </div>
   );
 };
 
-const User = props => {
+const User = (props) => {
   return (
-    <p>
-      {props.username} [{props.id}]
-    </p>
+    <>
+      <h1>Username: {props.username}</h1>
+      <p>Combo: {props.combo}</p>
+    </>
   );
 };
 
-export default Practice1;
+export default accountInformation;
