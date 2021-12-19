@@ -4,18 +4,19 @@ const Practice5 = () => {
   const user = {
     id: 1,
     username: "zgordon",
-    firstName: "Zac",
+    firstName: "Zachary",
     lastName: "Gordon",
     preferredName: "Zac",
     url: "https://zacgordon.com",
-    twitter: "zgordon"
+    twitter: "zgordon",
+    loginStatus: 0,
   };
   return (
     <div className="practice">
       {/*         
         1. Spread the "user" object into User so each "user" property becomes it's own prop
       */}
-      <User />
+      <User {...user} />
     </div>
   );
 };
@@ -26,12 +27,26 @@ const Practice5 = () => {
   4. Pass the username to <Username />
   5. Pass the url and twitter to <Social />
 */
-const User = () => {
+const User = ({
+  firstName,
+  lastName,
+  username,
+  url,
+  twitter,
+  preferredName,
+  loginStatus,
+}) => {
   return (
     <div className="user">
-      <FullName />
-      <Username />
-      <Social />
+      <FullName
+        firstName={firstName}
+        preferredName={preferredName}
+        lastName={lastName}
+      />
+      <h3>
+        <Username username={username} loginStatus={loginStatus} />
+      </h3>
+      <Social url={url} twitter={twitter} />
     </div>
   );
 };
@@ -39,9 +54,9 @@ const User = () => {
 /*
   6. Destructure the props needed
 */
-const FullName = props => (
+const FullName = ({ firstName, lastName, preferredName }) => (
   <h1>
-    {firstName} {lastName}
+    {firstName} ({preferredName}) {lastName}
   </h1>
 );
 
@@ -49,18 +64,33 @@ const FullName = props => (
   7. Create a <Username /> component that displays the username
 */
 
+const Username = ({ username, loginStatus }) => {
+  const isLoggedIn = loginStatus;
+  return (
+    <div>
+      <h3>
+        {username}
+        <span> ({isLoggedIn ? "Online" : "Offline"})</span>
+      </h3>
+    </div>
+  );
+};
+
 /*
   8. Destructure the props you will need
   9. Make the Website and Twitter links work based on props
 */
-const Social = props => {
+const Social = ({ url, twitter }) => {
+  // const twitterURL = "https://twitter.com/" + twitter;
   return (
     <ul className="social">
       <li>
-        <a>Website</a>
+        <a href={url}>{url}</a>
       </li>
       <li>
-        <a>Twitter</a>
+        {/* <a href={twitterURL}>{twitter}</a> */}
+        {/* Alternative and better syntax than the one above */}
+        <a href={`https://twitter.com/${twitter}`}>{twitter}</a>
       </li>
     </ul>
   );
